@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Anatolithic";
+  src: url("../fonts/Anatolithic-Base-64.ttf") format("truetype");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  font-family: "Noto Sans", "Segoe UI", "Arial Unicode MS", "Helvetica Neue", Arial, sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+}
+
+h1,
+h2,
+h3,
+.display-font {
+  font-family: "Anatolithic", "Noto Sans", "Segoe UI", "Arial Unicode MS", "Helvetica Neue", Arial, sans-serif;
+}
+
+.section-title {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
