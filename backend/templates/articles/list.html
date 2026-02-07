@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-stone-50 min-h-screen py-16">
+    <div class="container mx-auto px-4 max-w-6xl">
+        <h1 class="text-4xl font-bold mb-8 text-stone-900">Makaleler</h1>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {% for article in object_list %}
+            <a href="{% url 'articles_ui:detail' article.slug %}" class="group block rounded-xl border border-stone-100 bg-white p-6 shadow-sm transition hover:border-stone-200 hover:shadow-md">
+                <h2 class="mb-2 text-xl font-bold text-stone-900 group-hover:text-red-700">{{ article.title }}</h2>
+                <div class="text-xs text-stone-500 mb-4">{{ article.created_at|date:"d M Y" }}</div>
+                <p class="line-clamp-3 text-sm text-stone-600">
+                    {{ article.content|truncatewords:20 }}
+                </p>
+            </a>
+            {% empty %}
+            <p>Makale bulunamadı.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

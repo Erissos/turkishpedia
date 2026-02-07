@@ -19,6 +19,7 @@ type Dictionary = {
       profile: string;
       open: string;
       close: string;
+      logout: string;
     };
     nav: {
       articles: string;
@@ -55,13 +56,14 @@ type Dictionary = {
       label: string;
       headline: string;
       actionLabel: string;
-      items: Array<{ title: string; desc: string; icon: string }>;
+      items: Array<{ title: string; desc: string; icon: string; href: string }>;
     };
     featured: {
       title: string;
       heading: string;
       body: string;
       cta: string;
+      href: string;
     };
     weeklyRoute: {
       title: string;
@@ -69,6 +71,7 @@ type Dictionary = {
       heading: string;
       body: string;
       cta: string;
+      href: string;
       imageSrc: string;
       imageAlt: string;
     };
@@ -95,7 +98,7 @@ type Dictionary = {
     };
     title: string;
     subtitle: string;
-    items: Array<{ title: string; summary: string }>;
+    items: Array<{ title: string; summary: string; href: string }>;
   };
   profile: {
     hero: {
@@ -211,6 +214,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         profile: "Profil",
         open: "Menü",
         close: "Kapat",
+        logout: "Çıkış Yap",
       },
       nav: {
         articles: "Makaleler",
@@ -277,11 +281,11 @@ const dictionaries: Record<Locale, Dictionary> = {
         headline: "Bilgiye ulaşmanın en estetik yolu.",
         actionLabel: "Tüm Arşive Göz At",
         items: [
-          { title: "Tarih", desc: "Destanlardan Cumhuriyet'e", icon: "🏛️" },
-          { title: "Kültür", desc: "Sanat, Folklor ve Mutfak", icon: "🏺" },
-          { title: "Dil", desc: "Lehçeler ve Edebiyat", icon: "📜" },
-          { title: "Şehirler", desc: "81 İlin Hikayesi", icon: "🏙️" },
-          { title: "Rotalar", desc: "Adım Adım Keşif", icon: "🗺️" },
+          { title: "Tarih", desc: "Destanlardan Cumhuriyet'e", icon: "🏛️", href: "/categories" },
+          { title: "Kültür", desc: "Sanat, Folklor ve Mutfak", icon: "🏺", href: "/categories" },
+          { title: "Dil", desc: "Lehçeler ve Edebiyat", icon: "📜", href: "/categories" },
+          { title: "Şehirler", desc: "81 İlin Hikayesi", icon: "🏙️", href: "/cities/featured" },
+          { title: "Rotalar", desc: "Adım Adım Keşif", icon: "🗺️", href: "/routes" },
         ],
       },
       featured: {
@@ -290,6 +294,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         body:
           "Türk adının geçtiği ilk yazılı metinler olan Orhun Yazıtları, 8. yüzyılda Göktürk Kağanlığı tarafından dikilmiştir. Kültigin, Bilge Kağan ve Tonyukuk adına dikilen bu taşlar...",
         cta: "Devamını Oku",
+        href: "/articles/featured",
       },
       weeklyRoute: {
         title: "Haftalık Rota",
@@ -298,6 +303,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         body:
           "Fethiye'den Antalya'ya uzanan, antik kentlerin gölgesinde bir yürüyüş macerası.",
         cta: "Rotayı İncele",
+        href: "/routes",
         imageSrc: "/images/route-lycia.jpg",
         imageAlt: "Likya Yolu",
       },
@@ -325,8 +331,8 @@ const dictionaries: Record<Locale, Dictionary> = {
       title: "Rota Planlayıcı",
       subtitle: "Çok günlük gezi planları oluşturun",
       items: [
-        { title: "Ege Sahilleri", summary: "Mavi koylar ve antik liman kentleri." },
-        { title: "İpek Yolu Mirası", summary: "Pazarlar, kervansaraylar ve hikayeler." },
+        { title: "Ege Sahilleri", summary: "Mavi koylar ve antik liman kentleri.", href: "/routes/aegean-coastline" },
+        { title: "İpek Yolu Mirası", summary: "Pazarlar, kervansaraylar ve hikayeler.", href: "/routes/silk-road-heritage" },
       ],
     },
     profile: {
@@ -441,6 +447,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         profile: "Profile",
         open: "Menu",
         close: "Close",
+        logout: "Sign Out",
       },
       nav: {
         articles: "Articles",
@@ -507,11 +514,11 @@ const dictionaries: Record<Locale, Dictionary> = {
         headline: "The most elegant path to knowledge.",
         actionLabel: "Browse the Archive",
         items: [
-          { title: "History", desc: "From epics to the Republic", icon: "🏛️" },
-          { title: "Culture", desc: "Art, folklore, and cuisine", icon: "🏺" },
-          { title: "Language", desc: "Dialects and literature", icon: "📜" },
-          { title: "Cities", desc: "Stories of 81 provinces", icon: "🏙️" },
-          { title: "Routes", desc: "Step-by-step discovery", icon: "🗺️" },
+          { title: "History", desc: "From epics to the Republic", icon: "🏛️", href: "/categories" },
+          { title: "Culture", desc: "Art, folklore, and cuisine", icon: "🏺", href: "/categories" },
+          { title: "Language", desc: "Dialects and literature", icon: "📜", href: "/categories" },
+          { title: "Cities", desc: "Stories of 81 provinces", icon: "🏙️", href: "/cities/featured" },
+          { title: "Routes", desc: "Step-by-step discovery", icon: "🗺️", href: "/routes" },
         ],
       },
       featured: {
@@ -520,6 +527,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         body:
           "The Orkhon Inscriptions are the earliest written records containing the name Turk, erected in the 8th century by the Gokturk Khaganate for Kultigin, Bilge Khagan, and Tonyukuk...",
         cta: "Read More",
+        href: "/articles/featured",
       },
       weeklyRoute: {
         title: "Weekly Route",
@@ -527,6 +535,7 @@ const dictionaries: Record<Locale, Dictionary> = {
         heading: "Lycian Way: History on Foot",
         body: "A hiking journey from Fethiye to Antalya, under the shadow of ancient cities.",
         cta: "View Route",
+        href: "/routes",
         imageSrc: "/images/route-lycia.jpg",
         imageAlt: "Lycian Way",
       },
@@ -554,8 +563,8 @@ const dictionaries: Record<Locale, Dictionary> = {
       title: "Route Planner",
       subtitle: "Build multi-day itineraries",
       items: [
-        { title: "Aegean Coastline", summary: "Blue coves and ancient port towns." },
-        { title: "Silk Road Heritage", summary: "Markets, caravanserais, and stories." },
+        { title: "Aegean Coastline", summary: "Blue coves and ancient port towns.", href: "/routes/aegean-coastline" },
+        { title: "Silk Road Heritage", summary: "Markets, caravanserais, and stories.", href: "/routes/silk-road-heritage" },
       ],
     },
     profile: {

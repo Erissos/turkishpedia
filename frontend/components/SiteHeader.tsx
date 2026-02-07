@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import type { Locale } from "../lib/i18n";
@@ -14,6 +15,7 @@ type SiteHeaderLabels = {
   menu: {
     label: string;
     login: string;
+    logout: string;
     becomeEditor: string;
     archive: string;
     profile: string;
@@ -34,6 +36,7 @@ type SiteHeaderLabels = {
 export default function SiteHeader({ locale, labels }: { locale: Locale; labels: SiteHeaderLabels }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const router = useRouter();
   const navLinks = [
     { label: labels.nav.articles, href: `/${locale}/articles/featured` },
     { label: labels.nav.cities, href: `/${locale}/cities/featured` },
@@ -42,8 +45,9 @@ export default function SiteHeader({ locale, labels }: { locale: Locale; labels:
     { label: labels.nav.profile, href: `/${locale}/profile` },
   ];
   const accountLinks = [
-    { label: labels.menu.login, href: `/${locale}/profile` },
+    { label: labels.menu.login, href: `/${locale}/login` },
     { label: labels.menu.becomeEditor, href: `/${locale}/admin` },
+    { label: "✍️ Yeni Yazı", href: `/${locale}/write` },
     { label: labels.menu.archive, href: `/${locale}/articles/featured` },
     { label: labels.menu.profile, href: `/${locale}/profile` },
   ];
@@ -53,6 +57,12 @@ export default function SiteHeader({ locale, labels }: { locale: Locale; labels:
   const closeAll = () => {
     setIsMenuOpen(false);
     setIsDropdownOpen(false);
+  };
+  const handleLogout = () => {
+    window.localStorage.removeItem("tp_access_token");
+    window.localStorage.removeItem("tp_refresh_token");
+    closeAll();
+    router.push(`/${locale}/login`);
   };
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/90 backdrop-blur">
@@ -100,6 +110,13 @@ export default function SiteHeader({ locale, labels }: { locale: Locale; labels:
                     {link.label}
                   </Link>
                 ))}
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="block w-full rounded-xl px-3 py-2 text-left text-sm text-white/80 transition hover:bg-white/10"
+                >
+                  {labels.menu.logout}
+                </button>
               </div>
             ) : null}
           </div>
@@ -147,6 +164,9 @@ export default function SiteHeader({ locale, labels }: { locale: Locale; labels:
                     {link.label}
                   </Link>
                 ))}
+                <button type="button" className="text-left text-base" onClick={handleLogout}>
+                  {labels.menu.logout}
+                </button>
               </div>
             </div>
             <div className="flex flex-col gap-3 border-t border-white/10 pt-4">

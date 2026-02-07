@@ -31,8 +31,8 @@ export default function RootLayout({
   const dict = getDictionary(locale);
 
   return (
-    <html lang={locale}>
-      <body>
+    <html lang={locale} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <SiteHeader locale={locale} labels={dict.header} />
         <main className="min-h-screen">{children}</main>
         <Footer locale={locale} footer={dict.footer} />

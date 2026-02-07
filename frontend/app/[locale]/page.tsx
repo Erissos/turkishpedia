@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { CategoryGrid } from "../../components/home/CuratedSections";
 import Hero from "../../components/home/Hero";
 import { getDictionary } from "../../lib/i18n";
@@ -8,6 +10,7 @@ export default function HomePage({ params }: { params: { locale: string } }) {
   return (
     <div className="min-h-screen bg-[#F3F4F6]">
       <Hero
+        locale={params.locale}
         badge={dict.landing.hero.badge}
         title={dict.landing.hero.title}
         titleEmphasis={dict.landing.hero.titleEmphasis}
@@ -23,6 +26,8 @@ export default function HomePage({ params }: { params: { locale: string } }) {
         label={dict.landing.categories.label}
         headline={dict.landing.categories.headline}
         actionLabel={dict.landing.categories.actionLabel}
+        actionHref="/articles/featured"
+        locale={params.locale}
         categories={dict.landing.categories.items}
       />
 
@@ -32,7 +37,12 @@ export default function HomePage({ params }: { params: { locale: string } }) {
           <div className="rounded-2xl border border-stone-100 bg-white p-8 shadow-sm">
             <h3 className="mb-4 text-2xl font-bold italic text-stone-800">"{dict.landing.featured.heading}"</h3>
             <p className="mb-6 leading-relaxed text-stone-600">{dict.landing.featured.body}</p>
-            <button className="font-semibold text-red-700 hover:underline">{dict.landing.featured.cta} &rarr;</button>
+            <Link
+              href={`/${params.locale}${dict.landing.featured.href}`}
+              className="font-semibold text-red-700 hover:underline"
+            >
+              {dict.landing.featured.cta} &rarr;
+            </Link>
           </div>
         </div>
 
@@ -50,9 +60,12 @@ export default function HomePage({ params }: { params: { locale: string } }) {
               </span>
               <h3 className="mt-3 text-xl font-bold">{dict.landing.weeklyRoute.heading}</h3>
               <p className="mt-2 text-sm text-stone-400">{dict.landing.weeklyRoute.body}</p>
-              <button className="mt-6 w-full rounded-lg bg-white py-3 font-bold text-stone-900 transition-colors hover:bg-stone-200">
+              <Link
+                href={`/${params.locale}${dict.landing.weeklyRoute.href}`}
+                className="mt-6 block w-full rounded-lg bg-white py-3 text-center font-bold text-stone-900 transition-colors hover:bg-stone-200"
+              >
                 {dict.landing.weeklyRoute.cta}
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,3 +1,4 @@
+from django.views.generic import ListView, DetailView
 from rest_framework import viewsets
 
 from .models import ItineraryDay, ItineraryItem, RouteStop, TravelRoute
@@ -9,6 +10,16 @@ from .serializers import (
     TravelRouteSerializer,
 )
 
+class RouteListView(ListView):
+    model = TravelRoute
+    template_name = "routes/list.html"
+    context_object_name = "routes"
+    ordering = ["-created_at"]
+
+class RouteDetailView(DetailView):
+    model = TravelRoute
+    template_name = "routes/detail.html"
+    context_object_name = "route"
 
 class TravelRouteViewSet(viewsets.ModelViewSet):
     queryset = TravelRoute.objects.select_related("city", "created_by").all().order_by("-created_at")

@@ -2,6 +2,10 @@
 
 import { Globe, Search, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import type { Locale } from "../../lib/i18n";
 
 type HeroStat = {
   value: string;
@@ -9,6 +13,7 @@ type HeroStat = {
 };
 
 type HeroProps = {
+  locale: Locale;
   badge: string;
   title: string;
   titleEmphasis: string;
@@ -21,6 +26,7 @@ type HeroProps = {
 };
 
 export default function Hero({
+  locale,
   badge,
   title,
   titleEmphasis,
@@ -31,6 +37,16 @@ export default function Hero({
   imageSrc,
   imageAlt,
 }: HeroProps) {
+  const [query, setQuery] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const trimmed = query.trim();
+    const searchParams = trimmed ? `?query=${encodeURIComponent(trimmed)}` : "";
+    router.push(`/${locale}/search${searchParams}`);
+  };
+
   return (
     <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-[#0A0A0A]">
       <div className="absolute inset-0 z-0 overflow-hidden opacity-50">
@@ -53,7 +69,7 @@ export default function Hero({
 
           <p className="mx-auto mb-10 max-w-2xl text-lg text-stone-200 md:text-xl">{subtitle}</p>
 
-          <div className="group relative mx-auto max-w-3xl">
+          <form className="group relative mx-auto max-w-3xl" onSubmit={handleSubmit}>
             <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 blur opacity-25 transition duration-1000 group-hover:opacity-50" />
             <div className="relative flex items-center rounded-2xl bg-white p-2 shadow-2xl">
               <div className="flex flex-1 items-center px-4">
@@ -61,15 +77,20 @@ export default function Hero({
                 <input
                   type="text"
                   placeholder={searchPlaceholder}
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
                   className="h-14 w-full bg-transparent text-lg text-stone-800 placeholder:text-stone-400 focus:outline-none"
                 />
               </div>
-              <button className="flex items-center gap-2 rounded-xl bg-stone-900 px-8 py-4 font-semibold text-white transition-all hover:bg-orange-700">
+              <button
+                type="submit"
+                className="flex items-center gap-2 rounded-xl bg-stone-900 px-8 py-4 font-semibold text-white transition-all hover:bg-orange-700"
+              >
                 <Globe size={18} />
                 {ctaLabel}
               </button>
             </div>
-          </div>
+          </form>
 
           <div className="mt-12 flex flex-wrap justify-center gap-8 text-sm uppercase tracking-[0.2em] text-stone-400">
             {stats.map((stat) => (

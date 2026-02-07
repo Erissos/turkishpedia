@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ city.name }} - Turkishpedia{% endblock %}
+
+{% block content %}
+<div class="bg-[#F3F4F6] min-h-screen">
+    <!-- Page Hero -->
+    <div class="relative h-[40vh] min-h-[400px] w-full overflow-hidden bg-stone-900">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071&auto=format&fit=crop" alt="{{ city.name }}" class="h-full w-full object-cover opacity-60" />
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/40 to-transparent"></div>
+        </div>
+        <div class="absolute bottom-0 left-0 w-full p-6 sm:p-10">
+            <div class="mx-auto max-w-5xl">
+                <span class="mb-4 inline-block rounded border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-white backdrop-blur-md">
+                    Şehir
+                </span>
+                <h1 class="text-4xl font-bold text-white sm:text-5xl md:text-6xl">{{ city.name }}</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto max-w-5xl px-4 py-12">
+        <div class="rounded-2xl border border-stone-200 bg-white p-8 shadow-sm">
+            <div class="prose prose-lg prose-red max-w-none text-stone-700">
+                {{ city.description|linebreaks }}
+            </div>
+        </div>
+
+        {% if city.places.all %}
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold mb-6 text-stone-900">Gezilecek Yerler</h2>
+            <div class="grid gap-6 sm:grid-cols-2">
+                {% for place in city.places.all %}
+                <div class="bg-white p-6 rounded-xl border border-stone-100 shadow-sm">
+                    <h3 class="font-bold text-lg mb-2">{{ place.name }}</h3>
+                    <p class="text-stone-600 text-sm mb-3">{{ place.description|truncatewords:20 }}</p>
+                    <span class="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded">{{ place.get_kind_display }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+from django.views.generic import ListView, DetailView, TemplateView
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
@@ -13,6 +14,19 @@ from .serializers import (
 )
 from .services import create_revision
 
+
+class ArticleListView(ListView):
+    model = Article
+    template_name = "articles/list.html"
+    context_object_name = "articles"
+    paginate_by = 12
+    queryset = Article.objects.filter(status=Article.Status.PUBLISHED).order_by("-created_at")
+
+class ArticleDetailView(DetailView):
+    model = Article
+    template_name = "articles/detail.html"
+    context_object_name = "article"
+    queryset = Article.objects.filter(status=Article.Status.PUBLISHED)
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all().order_by("name")

@@ -1,11 +1,10 @@
 # Turkishpedia
 
-Production-ready, API-first platform for Turkish culture, history, and travel routes.
+Production-ready platform for Turkish culture, history, and travel routes.
 
 ## Structure
 
-- backend/: Django + DRF API
-- frontend/: Next.js App Router + TypeScript + Tailwind
+- backend/: Django Monolith (Templates + DRF API)
 - docker-compose.yml: local orchestration
 
 ## Backend apps
@@ -20,10 +19,9 @@ Production-ready, API-first platform for Turkish culture, history, and travel ro
 ## Local setup
 
 1) Copy .env.example to .env and adjust values
-2) Start docker services
-3) Run database migrations
-4) Create admin user
-5) Start backend and frontend
+2) Start docker services: `docker compose up --build`
+3) Access the site at http://localhost:8000
+4) Access Admin at http://localhost:8000/admin/
 
 ## Production notes
 
