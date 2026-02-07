@@ -19,8 +19,9 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["categories"] = Category.objects.all()[:6]
+        context["categories"] = Category.objects.all()[:8]  # Limit categories for compact view
         context["featured_article"] = Article.objects.filter(status=Article.Status.PUBLISHED).first()
+        context["recent_articles"] = Article.objects.filter(status=Article.Status.PUBLISHED).order_by("-created_at")[:5]
         context["featured_route"] = TravelRoute.objects.first()
         return context
 

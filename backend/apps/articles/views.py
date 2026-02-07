@@ -20,7 +20,18 @@ class ArticleListView(ListView):
     template_name = "articles/list.html"
     context_object_name = "articles"
     paginate_by = 12
-    queryset = Article.objects.filter(status=Article.Status.PUBLISHED).order_by("-created_at")
+
+    def get_queryset(self):
+        queryset = Article.objects.filter(status=Article.Status.PUBLISHED).order_by("-created_at")
+        category_slug = self.request.GET.get("category")
+        if category_slug:
+            queryset = queryset.filter(categories__slug=category_slug)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
 
 class ArticleDetailView(DetailView):
     model = Article

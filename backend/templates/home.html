@@ -1,130 +1,181 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-[#0A0A0A] text-white">
-    <div class="absolute inset-0 z-0 overflow-hidden opacity-50">
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-[#0A0A0A]"></div>
-        <!-- Placeholder image or dynamic one -->
-        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071&auto=format&fit=crop" alt="Turkey" class="h-full w-full scale-105 object-cover" />
-    </div>
-
-    <div class="container relative z-10 mx-auto px-4 text-center">
-        <span class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md">
-            Türkiye'nin Yaşayan Dijital Belleği
-        </span>
-
-        <h1 class="mb-6 text-5xl font-bold tracking-tight md:text-7xl lg:text-8xl">
-            Geçmişi Bil, <br />
-            <span class="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent">Geleceği Keşfet.</span>
-        </h1>
-
-        <p class="mx-auto mb-10 max-w-2xl text-lg text-white/70 md:text-xl">
-            Tarihten kültüre, dilden yerel rotalara kadar Türk mirasını keşfedin.
-        </p>
-
-        <form action="{% url 'search' %}" method="GET" class="mx-auto max-w-lg">
-            <div class="relative overflow-hidden rounded-full border border-white/20 bg-white/10 p-2 backdrop-blur-xl transition hover:bg-white/15 focus-within:bg-white/20 focus-within:ring-1 focus-within:ring-white/30">
-                <input
-                    type="text"
-                    name="q"
-                    placeholder="Göktürk Yazıtları, Likya Yolu veya Mimar Sinan..."
-                    class="w-full bg-transparent py-3 pl-6 pr-14 text-white placeholder-white/50 outline-none"
-                    required
-                />
-                <button
-                    type="submit"
-                    class="absolute right-2 top-2 rounded-full bg-white p-3 text-black transition hover:bg-neutral-200"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                </button>
-            </div>
-        </form>
-
-        <div class="mt-12 flex justify-center gap-8 md:gap-16">
-            <div class="text-center">
-                <div class="text-2xl font-bold text-white md:text-3xl">50K+</div>
-                <div class="text-xs uppercase tracking-wider text-white/50">Madde</div>
-            </div>
-            <div class="text-center">
-                <div class="text-2xl font-bold text-white md:text-3xl">1.2K+</div>
-                <div class="text-xs uppercase tracking-wider text-white/50">Rota</div>
-            </div>
-            <div class="text-center">
-                <div class="text-2xl font-bold text-white md:text-3xl">24/7</div>
-                <div class="text-xs uppercase tracking-wider text-white/50">Güncel</div>
-            </div>
+<div class="bg-stone-50 min-h-screen">
+    
+    <!-- Hero Section (Daha Kompakt ve Modern) -->
+    <section class="relative bg-stone-900 text-white overflow-hidden h-[500px]">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071&auto=format&fit=crop" alt="Turkey Cover" class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-900 via-transparent to-transparent"></div>
         </div>
-    </div>
-</section>
-
-<!-- Categories -->
-<section class="bg-stone-50 py-24">
-    <div class="container mx-auto max-w-6xl px-4">
-        <div class="mb-16 flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div>
-                <span class="mb-2 block text-xs font-bold uppercase tracking-widest text-[#C05621]">Kategoriler</span>
-                <h2 class="text-3xl font-bold text-[#1A202C]">Bilgiye ulaşmanın en estetik yolu.</h2>
-            </div>
-            <a href="{% url 'articles_ui:list' %}" class="group flex items-center gap-2 text-sm font-semibold text-[#1A202C] transition-colors hover:text-[#C05621]">
-                Tüm Arşive Göz At &rarr;
-            </a>
-        </div>
-
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {% for category in categories %}
-            <a href="#" class="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
-                <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-stone-50 text-3xl transition-colors group-hover:bg-[#FFF5F0]">
-                    ✨
-                </div>
-                <h3 class="mb-2 text-xl font-bold text-[#1A202C]">{{ category.name }}</h3>
-                <p class="mb-6 text-sm leading-relaxed text-[#718096]">{{ category.description }}</p>
-                <span class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#C05621]">
-                    İncele
-                </span>
-            </a>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!-- Featured Article -->
-<section class="max-w-7xl mx-auto px-4 py-16 grid lg:grid-cols-3 gap-12">
-    <div class="lg:col-span-2 space-y-8">
-        <h2 class="border-b-2 border-stone-200 pb-2 text-3xl font-bold">Günün Maddesi</h2>
-        {% if featured_article %}
-        <div class="rounded-2xl border border-stone-100 bg-white p-8 shadow-sm">
-            <h3 class="mb-4 text-2xl font-bold italic text-stone-800">"{{ featured_article.title }}"</h3>
-            <p class="mb-6 leading-relaxed text-stone-600">
-                {{ featured_article.content|truncatewords:40|linebreaksbr }}
+        
+        <div class="container mx-auto px-4 h-full flex flex-col justify-center items-center relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
+                Anadolu'yu <span class="text-clay-400">Keşfet</span>
+            </h1>
+            <p class="text-lg md:text-xl text-stone-300 max-w-2xl mb-8">
+                Binlerce yıllık tarih, kültür ve mirasın dijital ansiklopedisi.
             </p>
-            <a href="{% url 'articles_ui:detail' featured_article.slug %}" class="font-semibold text-red-700 hover:underline">
-                Keşfet &rarr;
-            </a>
+            
+            <!-- Arama Barı -->
+            <form action="{% url 'search' %}" method="GET" class="w-full max-w-xl">
+                <div class="relative group">
+                    <input type="text" name="q" placeholder="Ne aramak istersiniz? (Örn: Göbeklitepe, Mimar Sinan)" 
+                        class="w-full py-4 pl-6 pr-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 focus:bg-white focus:text-stone-900 focus:placeholder-stone-400 transition-all outline-none ring-0 shadow-lg">
+                    <button type="submit" class="absolute right-2 top-2 h-10 w-10 bg-clay-600 rounded-full flex items-center justify-center hover:bg-clay-500 transition-colors">
+                        <i class="fas fa-search text-white text-sm"></i>
+                    </button>
+                </div>
+            </form>
         </div>
-        {% else %}
-        <p>Öne çıkan makale bulunamadı.</p>
-        {% endif %}
-    </div>
+    </section>
 
-    <!-- Weekly Route -->
-    <div class="space-y-8">
-        <h2 class="border-b-2 border-stone-200 pb-2 text-3xl font-bold">Haftanın Rotası</h2>
-        {% if featured_route %}
-        <div class="overflow-hidden rounded-2xl bg-stone-800 text-white shadow-xl">
-            <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto=format&fit=crop');"></div>
-            <div class="p-6">
-                <span class="rounded bg-red-600 px-2 py-1 text-xs font-bold uppercase">Kültür Turu</span>
-                <h3 class="mt-3 text-xl font-bold">{{ featured_route.title }}</h3>
-                <p class="mt-2 text-sm text-stone-400">{{ featured_route.description|truncatewords:20 }}</p>
-                <a href="{% url 'routes_ui:detail' featured_route.slug %}" class="mt-6 block w-full rounded-lg bg-white py-3 text-center font-bold text-stone-900 transition-colors hover:bg-stone-200">
-                    Rotayı İncele
-                </a>
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            <!-- Sol Kolon (Ana İçerik - %75) -->
+            <div class="lg:col-span-3 space-y-10">
+                
+                <!-- Kategoriler (Kompakt Tasarım) -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-stone-800 flex items-center gap-2">
+                            <i class="fas fa-th-large text-clay-600"></i> Kategoriler
+                        </h2>
+                        <a href="{% url 'articles_ui:list' %}" class="text-sm font-medium text-clay-600 hover:text-clay-700">Tümü &rarr;</a>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        {% for category in categories %}
+                        <a href="{% url 'articles_ui:list' %}?category={{ category.slug }}" class="flex flex-col items-center justify-center p-3 bg-white rounded-lg border border-stone-200 hover:border-clay-300 hover:shadow-md transition-all group text-center h-24">
+                            <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">
+                                {% cycle '🏛️' '🕌' '📚' '🥘' '🎭' '🧗' '🌿' '🎶' %}
+                            </span>
+                            <span class="text-sm font-semibold text-stone-700 group-hover:text-clay-700">{{ category.name }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Günün Maddesi (Featured Article) -->
+                {% if featured_article %}
+                <section class="bg-white rounded-xl border border-stone-200 overflow-hidden shadow-sm flex flex-col md:flex-row">
+                    <div class="md:w-2/5 relative h-64 md:h-auto">
+                        <img src="https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?auto=format&fit=crop&q=80" alt="Article" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 bg-white/90 backdrop-blur text-xs font-bold uppercase tracking-wider rounded-full text-stone-900">
+                                Öne Çıkan
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6 md:w-3/5 flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold text-stone-900 mb-3">
+                            <a href="{% url 'articles_ui:detail' featured_article.slug|default:'#' %}" class="hover:text-clay-600 transition">
+                                {{ featured_article.title }}
+                            </a>
+                        </h3>
+                        <p class="text-stone-600 mb-4 line-clamp-3">
+                            {{ featured_article.content|striptags }}
+                        </p>
+                        <div class="mt-auto pt-4 border-t border-stone-100 flex items-center justify-between">
+                            <div class="flex items-center gap-2 text-sm text-stone-500">
+                                <div class="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center text-xs font-bold text-stone-600">
+                                    {% if featured_article.author.avatar %}
+                                        <img src="{{ featured_article.author.avatar.url }}" class="w-full h-full rounded-full object-cover">
+                                    {% else %}
+                                        {{ featured_article.author.username|slice:":2"|upper }}
+                                    {% endif %}
+                                </div>
+                                <span>{{ featured_article.author.display_name|default:featured_article.author.username }}</span>
+                            </div>
+                            <span class="text-xs text-stone-400">{{ featured_article.created_at|date:"d M Y" }}</span>
+                        </div>
+                    </div>
+                </section>
+                {% endif %}
+
+                <!-- Rota Önerisi -->
+                {% if featured_route %}
+                <div>
+                     <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-stone-800 flex items-center gap-2">
+                            <i class="fas fa-map-marked-alt text-clay-600"></i> Haftanın Rotası
+                        </h2>
+                    </div>
+                    <div class="bg-white rounded-xl border border-stone-200 p-1">
+                        <div class="relative h-64 rounded-lg overflow-hidden group">
+                             <img src="https://images.unsplash.com/photo-1527838832700-5059252407fa?auto=format&fit=crop&q=80" alt="Route" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                             <div class="absolute bottom-6 left-6 text-white max-w-2xl">
+                                <h3 class="text-2xl font-bold mb-2">{{ featured_route.title }}</h3>
+                                <p class="text-white/80 line-clamp-2 text-sm">{{ featured_route.description }}</p>
+                                <a href="{% url 'routes_ui:detail' featured_route.id|default:1 %}" class="inline-block mt-3 text-sm font-bold border-b border-white pb-0.5 hover:text-clay-300 hover:border-clay-300 transition">Rotayı İncele &rarr;</a>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+
+            <!-- Sağ Kolon (Sidebar - %25) -->
+            <div class="lg:col-span-1 space-y-6">
+                
+                <!-- Gündem -->
+                <div class="bg-white rounded-xl border border-stone-200 shadow-sm p-5">
+                    <h3 class="font-bold text-stone-900 mb-4 pb-2 border-b border-stone-100 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        Gündemdekiler
+                    </h3>
+                    <ul class="space-y-4">
+                        {% for article in recent_articles %}
+                        <li>
+                            <a href="{% url 'articles_ui:detail' article.slug|default:'#' %}" class="group">
+                                <span class="text-xs font-semibold text-clay-600 block mb-0.5">{{ article.categories.first.name|default:"Genel" }}</span>
+                                <h4 class="text-sm font-medium text-stone-800 group-hover:text-clay-700 leading-snug transition-colors">
+                                    {{ article.title }}
+                                </h4>
+                            </a>
+                        </li>
+                        {% empty %}
+                        <li class="text-sm text-stone-500">Henüz gündem maddesi yok.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Reklam Alanı -->
+                <div class="sticky top-24">
+                    <div class="bg-stone-100 rounded-xl border border-stone-200 p-4 min-h-[300px] flex flex-col items-center justify-center text-center relative overflow-hidden group">
+                        <!-- Reklam Placeholder Deseni -->
+                        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#605850 1px, transparent 1px); background-size: 16px 16px;"></div>
+                        
+                        <span class="bg-stone-200 text-stone-500 text-xs px-2 py-1 rounded mb-2 font-mono">Reklam</span>
+                        <h4 class="text-stone-400 font-bold mb-1">Sponsorlu Alan</h4>
+                        <p class="text-xs text-stone-400 px-4">Bu alanda reklamlarınız yer alabilir.</p>
+
+                        <!-- "Reklam Ver" butonu (Mockup) -->
+                        <button class="mt-4 px-4 py-2 bg-white border border-stone-300 text-stone-600 text-xs font-semibold rounded hover:bg-stone-50 transition w-32">
+                           İletişim
+                        </button>
+                    </div>
+
+                    <!-- Bülten Aboneliği (Extra Sidebar İçeriği) -->
+                    <div class="mt-6 bg-clay-50 rounded-xl p-5 border border-clay-100 hidden md:block">
+                        <h4 class="font-bold text-clay-800 text-sm mb-2">Haftalık Bülten</h4>
+                        <p class="text-xs text-clay-600 mb-3">En yeni makaleler e-postana gelsin.</p>
+                        <div class="flex gap-2">
+                            <input type="email" placeholder="E-posta adresi" class="w-full text-xs p-2 rounded border border-clay-200 focus:outline-none focus:border-clay-400">
+                            <button class="px-2 py-2 bg-clay-600 text-white rounded text-xs hover:bg-clay-700">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        {% else %}
-        <p>Rota bulunamadı.</p>
-        {% endif %}
     </div>
-</section>
+</div>
 {% endblock %}
